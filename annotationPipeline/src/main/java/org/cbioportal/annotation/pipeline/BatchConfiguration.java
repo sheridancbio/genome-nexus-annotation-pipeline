@@ -70,10 +70,8 @@ public class BatchConfiguration
             .build();
     }
 
-    @Bean
-    public AnnotationUtil annotationUtil() {
-        return new AnnotationUtil();
-    }
+    @Autowired
+    public AnnotationUtil annotationUtil;
 
     @Bean
     public Step step()

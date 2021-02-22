@@ -46,6 +46,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.core.io.FileSystemResource;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.TestPropertySource;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.test.context.junit4.*;
 
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -65,6 +66,7 @@ public class TestAnnotationPipeline {
             .addString("outputFilename", "target/test-outputs/output.txt")
             .addString("replace", "false")
             .addString("isoformOverride", "uniprot")
+            .addString("postIntervalSize", "0")
             .toJobParameters());
         AssertFile.assertFileEquals(new FileSystemResource(classLoader.getResource("data/expectedmaf.txt").getPath()), new FileSystemResource("target/test-outputs/output.txt"));
     }

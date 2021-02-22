@@ -49,6 +49,7 @@ public class MutationFieldSetMapper implements  FieldSetMapper<MutationRecord> {
         MutationRecord record = new MutationRecord();
         Set<String> names = new HashSet(Arrays.asList(fs.getNames()));
         names.addAll(record.getHeader());
+        System.out.println(record.getHeader());
         for (String field : names) {
             try {
                 record.getClass().getMethod("set" + field.toUpperCase(), String.class).invoke(record, fs.readRawString(field));
@@ -58,6 +59,7 @@ public class MutationFieldSetMapper implements  FieldSetMapper<MutationRecord> {
                     record.addAdditionalProperty(field, fs.readRawString(field));
                 }
                 else {
+                    LOG.error(e);
                     LOG.error("Something went wrong reading field " + field);
                 }
             }

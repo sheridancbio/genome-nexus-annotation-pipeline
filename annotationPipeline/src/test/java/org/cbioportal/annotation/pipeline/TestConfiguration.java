@@ -1,20 +1,20 @@
 /*
- * Copyright (c) 2016 Memorial Sloan-Kettering Cancer Center.
+ * Copyright (c) 2016 Memorial SloanKettering Cancer Center.
  *
  * This library is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY, WITHOUT EVEN THE IMPLIED WARRANTY OF MERCHANTABILITY OR FITNESS
  * FOR A PARTICULAR PURPOSE. The software and documentation provided hereunder
- * is on an "as is" basis, and Memorial Sloan-Kettering Cancer Center has no
+ * is on an "as is" basis, and Memorial SloanKettering Cancer Center has no
  * obligations to provide maintenance, support, updates, enhancements or
- * modifications. In no event shall Memorial Sloan-Kettering Cancer Center be
+ * modifications. In no event shall Memorial SloanKettering Cancer Center be
  * liable to any party for direct, indirect, special, incidental or
  * consequential damages, including lost profits, arising out of the use of this
- * software and its documentation, even if Memorial Sloan-Kettering Cancer
+ * software and its documentation, even if Memorial SloanKettering Cancer
  * Center has been advised of the possibility of such damage.
  */
 
 /*
- * This file is part of cBioPortal CMO-Pipelines.
+ * This file is part of cBioPortal CMOPipelines.
  *
  * cBioPortal is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as
@@ -42,6 +42,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.context.annotation.*;
 import org.springframework.test.context.TestPropertySource;
+import org.springframework.beans.factory.annotation.Qualifier;
 /**
  *
  * @author heinsz
@@ -62,30 +63,24 @@ public class TestConfiguration {
     public StepBuilderFactory stepBuilderFactory;
 
     @Bean
-    public AnnotationUtil annotationUtil() {
-        return new AnnotationUtil();
-    }
-
-    @Bean
     public JobLauncherTestUtils jobLauncherTestUtils() {
         JobLauncherTestUtils jobLauncherTestUtils = new JobLauncherTestUtils();
-        jobLauncherTestUtils.setJob(annotationJob());
+        jobLauncherTestUtils.setJob(job);
         return new JobLauncherTestUtils();
     }
 
     @Value("${chunk:10}")
     private String chunk;
 
-    @Bean
-    public Job annotationJob()
-    {
-        return jobBuilderFactory.get(ANNOTATION_JOB_TEST)
-            .start(step())
-            .build();
-    }
+    @Autowired
+    public Job job;
 
+    @Autowired
+    public Step step;
+    
+/**
     @Bean
-    public Step step()
+    public Step stepTest()
     {
         return stepBuilderFactory.get("step")
             .<AnnotatedRecord, String> chunk(Integer.parseInt(chunk))
@@ -114,4 +109,7 @@ public class TestConfiguration {
     {
         return new MutationRecordWriter();
     }
+
+**/
 }
+
