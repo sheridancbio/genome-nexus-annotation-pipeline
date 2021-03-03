@@ -1,15 +1,15 @@
 /*
- * Copyright (c) 2016 - 2020 Memorial Sloan-Kettering Cancer Center.
+ * Copyright (c) 2016 - 2020 Memorial Sloan Kettering Cancer Center.
  *
  * This library is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY, WITHOUT EVEN THE IMPLIED WARRANTY OF MERCHANTABILITY OR FITNESS
  * FOR A PARTICULAR PURPOSE. The software and documentation provided hereunder
- * is on an "as is" basis, and Memorial Sloan-Kettering Cancer Center has no
+ * is on an "as is" basis, and Memorial Sloan Kettering Cancer Center has no
  * obligations to provide maintenance, support, updates, enhancements or
- * modifications. In no event shall Memorial Sloan-Kettering Cancer Center be
+ * modifications. In no event shall Memorial Sloan Kettering Cancer Center be
  * liable to any party for direct, indirect, special, incidental or
  * consequential damages, including lost profits, arising out of the use of this
- * software and its documentation, even if Memorial Sloan-Kettering Cancer
+ * software and its documentation, even if Memorial Sloan Kettering Cancer
  * Center has been advised of the possibility of such damage.
  */
 
@@ -85,8 +85,10 @@ public class MutationRecordReader implements ItemStreamReader<AnnotatedRecord> {
         if (!mutationRecords.isEmpty()) {
             if (postIntervalSize > 0) {
                 this.allAnnotatedRecords = annotator.getAnnotatedRecordsUsingPOST(summaryStatistics, mutationRecords, isoformOverride, replace, postIntervalSize, true);
+System.out.println("annotating with post: isoformOverride = " + isoformOverride + ", replace = " + replace + ", postintervalsize = " + postIntervalSize);
             } else {
                 this.allAnnotatedRecords = annotator.annotateRecordsUsingGET(summaryStatistics, mutationRecords, isoformOverride, replace, true);
+System.out.println("annotating with get: isoformOverride = " + isoformOverride + ", replace = " + replace + ", postintervalsize = " + postIntervalSize);
             }
             for (AnnotatedRecord ar : this.allAnnotatedRecords) {
                 header.addAll(ar.getHeaderWithAdditionalFields());
@@ -132,6 +134,7 @@ public class MutationRecordReader implements ItemStreamReader<AnnotatedRecord> {
         MutationRecord mutationRecord;
         try {
             while((mutationRecord = reader.read()) != null) {
+//System.out.println("Read mutation : " + mutationRecord.getHUGO_SYMBOL());
                 mutationRecords.add(mutationRecord);
             }
         }

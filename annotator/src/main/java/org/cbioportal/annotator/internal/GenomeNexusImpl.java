@@ -1,15 +1,15 @@
 /*
- * Copyright (c) 2016 - 2020 Memorial Sloan-Kettering Cancer Center.
+ * Copyright (c) 2016 - 2020 Memorial Sloan Kettering Cancer Center.
  *
  * This library is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY, WITHOUT EVEN THE IMPLIED WARRANTY OF MERCHANTABILITY OR FITNESS
  * FOR A PARTICULAR PURPOSE. The software and documentation provided hereunder
- * is on an "as is" basis, and Memorial Sloan-Kettering Cancer Center has no
+ * is on an "as is" basis, and Memorial Sloan Kettering Cancer Center has no
  * obligations to provide maintenance, support, updates, enhancements or
- * modifications. In no event shall Memorial Sloan-Kettering Cancer Center be
+ * modifications. In no event shall Memorial Sloan Kettering Cancer Center be
  * liable to any party for direct, indirect, special, incidental or
  * consequential damages, including lost profits, arising out of the use of this
- * software and its documentation, even if Memorial Sloan-Kettering Cancer
+ * software and its documentation, even if Memorial Sloan Kettering Cancer
  * Center has been advised of the possibility of such damage.
  */
 
@@ -122,6 +122,12 @@ public class GenomeNexusImpl implements Annotator {
         String genomicLocation = parseGenomicLocationString(mRecord);
         VariantAnnotation gnResponse = null;
         try {
+
+
+            System.out.println("URL Used For Annotating: " + getUrlForRecord(mRecord, isoformOverridesSource));
+
+
+
             gnResponse = this.apiClient.fetchVariantAnnotationByGenomicLocationGET(genomicLocation,
                     isoformOverridesSource,
                     "",
@@ -158,15 +164,21 @@ public class GenomeNexusImpl implements Annotator {
             }
             catch (HttpServerErrorException ex) {
                 serverErrorMessage = "Failed to annotate variant due to internal server error";
+System.out.println(serverErrorMessage);
             }
             catch (HttpClientErrorException ex) {
                 serverErrorMessage = "Failed to annotate variant due to client error";
+System.out.println(serverErrorMessage);
             }
             catch (HttpMessageNotReadableException ex) {
                 serverErrorMessage = "Failed to annotate variant due to message not readable error";
+System.out.println(serverErrorMessage);
             }
             catch (GenomeNexusAnnotationFailureException ex) {
                 serverErrorMessage = "Failed to annotate variant due to Genome Nexus : " + ex.getMessage();
+ex.printStackTrace();
+System.out.println(serverErrorMessage);
+System.exit(1);
             }
             annotatedRecordsList.add(annotatedRecord);
 
